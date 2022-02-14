@@ -1,4 +1,4 @@
-import express, {response} from "express";
+import express from "express";
 
 import fetch from "node-fetch";
 
@@ -26,9 +26,6 @@ app.get("/", (req, res) => {
     fetch(`https://steamcommunity.com/inventory/76561199172982948/730/2?l=en`)
         .then(res => res.json())
         .then((data) => {
-            // @ts-ignore
-            console.log(data.descriptions);
-            console.log(filter(data));
             res.send(filter(data));
         });
 });
