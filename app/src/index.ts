@@ -18,12 +18,29 @@ function filter(data: any): object {
             tradable: item.tradable
         }
     });
-    filteredData.sort((a: InventoryItem, b: InventoryItem) => a.market_hash_name > b.market_hash_name ? 1 : -1);
+
+    function sortI(a: InventoryItem, b: InventoryItem): number {
+        if (a.tradable > b.tradable) {
+            return 1;
+        }
+        if (a.tradable < b.tradable) {
+            return -1;
+        }
+        if (a.market_hash_name > b.market_hash_name) {
+            return 1;
+        }
+        if (a.market_hash_name < b.market_hash_name) {
+            return -1;
+        }
+        return 0
+    }
+
+    filteredData.sort(sortI);
     return filteredData;
 }
 
 app.get("/", (req, res) => {
-    fetch(`https://steamcommunity.com/inventory/76561199172982948/730/2?l=en`)
+    fetch(`https://steamcommunity.com/inventory/76561198004925315/570/2?l=en`)
         .then(res => res.json())
         .then((data) => {
             res.send(filter(data));
